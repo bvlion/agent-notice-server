@@ -1,14 +1,12 @@
 package net.ambitious.agentnotice.index
 
-import net.ambitious.agentnotice.common.AppFirestore
+import net.ambitious.agentnotice.data.AppFirestore
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class IndexController {
-
-  private val appFireStore: AppFirestore = AppFirestore(null)
+class IndexController(private val appFireStore: AppFirestore) {
 
   @GetMapping("/")
   fun index(

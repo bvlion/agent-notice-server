@@ -1,4 +1,4 @@
-package net.ambitious.agentnotice.common
+package net.ambitious.agentnotice.data
 
 import com.google.api.core.ApiFutureCallback
 import com.google.api.core.ApiFutures
@@ -11,11 +11,14 @@ import com.google.cloud.firestore.WriteResult
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.cloud.FirestoreClient
+import org.springframework.stereotype.Component
 import java.io.ByteArrayInputStream
+import java.util.*
 
-class AppFirestore(private val credentials: ByteArray?) {
+@Component
+class AppFirestore(appParams: AppParams) {
 
-  private var firestore: Firestore = if (credentials == null) {
+  private val firestore: Firestore = if (appParams.firestoreAdminSdk.isEmpty()) {
     FirestoreOptions
       .newBuilder()
       .setProjectId("test")
@@ -23,8 +26,9 @@ class AppFirestore(private val credentials: ByteArray?) {
       .build()
       .service
   } else {
+    val credential = Base64.getDecoder().decode(appParams.firestoreAdminSdk)
     val options = FirebaseOptions.builder()
-      .setCredentials(GoogleCredentials.fromStream(ByteArrayInputStream(credentials)))
+      .setCredentials(GoogleCredentials.fromStream(ByteArrayInputStream(credential)))
       .build()
     FirebaseApp.initializeApp(options)
     FirestoreClient.getFirestore()
