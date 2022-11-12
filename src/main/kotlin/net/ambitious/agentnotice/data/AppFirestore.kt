@@ -13,6 +13,7 @@ import com.google.firebase.FirebaseOptions
 import com.google.firebase.cloud.FirestoreClient
 import org.springframework.stereotype.Component
 import java.io.ByteArrayInputStream
+import java.security.MessageDigest
 import java.util.*
 
 @Component
@@ -34,14 +35,24 @@ class AppFirestore(appParams: AppParams) {
     FirestoreClient.getFirestore()
   }
 
-  private fun getDocument(document: String = "y2MVid9IBrJo5AdHfO4i"): DocumentReference =
+  private fun getDocument(document: String): DocumentReference =
     firestore.collection("apps").document(document)
 
-  fun save(map: Map<String, Any>) {
-    ApiFutures.addCallback(
-      getDocument().set(map, SetOptions.merge()),
-      object : ApiFutureCallback<WriteResult> {
+  fun createToken(title: String): String {
+    val token = MessageDigest.getInstance("SHA-256")
+      .digest(Date().toString().toByteArray())
+      .joinToString(separator = "") {
+        "%02x".format(it)
+      }
+    save(token, mapOf("00_title" to title))
+    return token
+  }
 
+  fun save(token: String, map: Map<String, Any>) {
+    getDocument(token).get().get().data
+    ApiFutures.addCallback(
+      getDocument(token).set(map, SetOptions.merge()),
+      object : ApiFutureCallback<WriteResult> {
         override fun onFailure(t: Throwable?) {
         }
 

@@ -10,11 +10,9 @@ class IndexController(private val appFireStore: AppFirestore) {
 
   @GetMapping("/")
   fun index(
-    @RequestParam("user", defaultValue = "user") user: String,
-    @RequestParam("token", defaultValue = "token") token: String,
+    @RequestParam("title") title: String,
   ): Map<String, Any> {
-    val param = mapOf(user to token)
-    appFireStore.save(param)
-    return param
+    val token = appFireStore.createToken(title)
+    return mapOf("token" to token)
   }
 }
