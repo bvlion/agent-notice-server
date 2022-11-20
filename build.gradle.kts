@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "2.7.5"
 	id("io.spring.dependency-management") version "1.1.0"
-	kotlin("jvm") version "1.7.20"
 	kotlin("plugin.spring") version "1.7.21"
+	kotlin("jvm") version "1.7.21"
 }
 
 group = "net.ambitious"
@@ -20,8 +20,8 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	implementation("com.google.cloud:google-cloud-firestore:3.7.0")
-	implementation("com.google.firebase:firebase-admin:9.1.0")
+	implementation("com.google.cloud:google-cloud-firestore:3.7.1")
+	implementation("com.google.firebase:firebase-admin:9.1.1")
 	implementation("com.vladsch.flexmark:flexmark-all:0.64.0")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
