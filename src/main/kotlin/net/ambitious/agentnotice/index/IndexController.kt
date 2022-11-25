@@ -18,7 +18,12 @@ class IndexController(private val appFireStore: AppFirestore) {
   }
 
   @GetMapping("/test")
-  fun user(@AuthToken token: String): Map<String, Any> {
-    return mapOf("token" to token)
+  fun user(
+    @AuthToken token: String,
+    @RequestParam("user") user: String,
+    @RequestParam("fcm") fcm: String,
+  ): Map<String, Any> {
+    val time = appFireStore.addUser(token, user, fcm)
+    return mapOf("save" to "success ${time.toDate()}")
   }
 }
