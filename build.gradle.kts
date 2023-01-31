@@ -20,7 +20,7 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	implementation("com.google.cloud:google-cloud-firestore:3.7.1")
+	implementation("com.google.cloud:google-cloud-firestore:3.7.9")
 	implementation("com.google.firebase:firebase-admin:9.1.1")
 	implementation("com.vladsch.flexmark:flexmark-all:0.64.0")
 
